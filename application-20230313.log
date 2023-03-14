@@ -1,0 +1,4 @@
+2023-03-13 21:28:21.387 [main] INFO  org.example.Calculator - [FACTORIAL] - 12.0
+2023-03-13 21:28:21.390 [main] INFO  org.example.Calculator - [RESULT - FACTORIAL] - 4.790016E8
+2023-03-13 21:28:34.810 [main] INFO  org.example.Calculator - [SQ ROOT] - 36.0
+2023-03-13 21:28:34.811 [main] INFO  org.example.Calculator - [RESULT - SQ ROOT] - 6.0
