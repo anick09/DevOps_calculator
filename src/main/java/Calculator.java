@@ -1,111 +1,150 @@
+
+import java.util.*;
+import java.io.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class Calculator {
-    private static final Logger logger = LogManager.getLogger(Calculator.class);
 
-    public Calculator(){}
-    public static void main(String []a){
-        Calculator calculator = new Calculator();
-        Scanner scanner = new Scanner(System.in);
 
-        double num1,num2;
-        do{
-            System.out.println("Scientific Calculator choose your option below to perform operations :- \n");
-            System.out.println("\t Press 1 for square root\n\t Press 2 for factorial\n\t Press 3 for Natural log\n\t Press 4 for Power \t");
-            int choice;
+    private static final Logger logger= LogManager.getLogger(Calculator.class);
+
+    static double a,b,c;
+    static int choice;
+    static boolean check=true;
+    static Scanner sc=new Scanner(System.in);
+
+    public static void main (String args[]){
+        while(check){
+            System.out.println("---Press a key according to given options---\n 1:Square Root \t 2:Factorial \t 3:Natural Logarithm \t 4:Power Funtion \t 5:Exit");
+            System.out.print("Enter your choice:::");
             try {
-                choice = scanner.nextInt();
-            }catch (InputMismatchException e){
+                choice = sc.nextInt();
+            }
+            catch (InputMismatchException error) {
+                System.out.println("Invalid input entered!!!");
                 return;
             }
-
-            switch (choice){
+            switch (choice) {
                 case 1:
-                    // Square Root
                     try {
-                        System.out.println("Enter the number : ");
-                        num1 = scanner.nextDouble();
-                    }catch (InputMismatchException err){
-                        logger.error("Invalid input, input is not a number "+ err);
+                        System.out.print("Enter a number for calculating square-root:::");
+                        a = sc.nextDouble();
+                    } catch (InputMismatchException error) {
+                        logger.error("Invalid input, entered input is not a number!!!");
                         return;
                     }
-                    System.out.println("Square root of " + num1 + " is " + calculator.squareRoot(num1));
+                    if (a < 0)
+                        System.out.println("Square root of negative number can not be calculated!!!");
+
+                    else
+                        System.out.println("The resultant output is: " +sqrt(a));
                     break;
                 case 2:
-                    //Factorial
+                    int f;
                     try {
-                        System.out.println("Enter the number : ");
-                        num1 = scanner.nextDouble();
-                    }catch (InputMismatchException err){
-                        logger.error("Invalid input, input is not a number "+ err);
+                        System.out.print("Enter a number for calculating factorial:::");
+                        f = sc.nextInt();
+                    } catch (InputMismatchException error) {
+                        logger.error("Invalid input, entered input is not a number!!!");
                         return;
                     }
-                    System.out.println("Factorial of "+num1+" is : "+ calculator.factorial(num1));
+                    if (f < 0)
+                        System.out.println("Factorial of negative number can not be calculated!!!");
+                    else
+                        System.out.println("The resultant output is: " +fact(f));
                     break;
                 case 3:
-                    //Natural Log
                     try {
-                        System.out.println("Enter the number : ");
-                        num1 = scanner.nextDouble();
-                    }catch (InputMismatchException err){
-                        logger.error("Invalid input, input is not a number "+ err);
+                        System.out.print("Enter a number for calculating natural-logarithm:::");
+                        a = sc.nextDouble();
+                    } catch (InputMismatchException error) {
+                        logger.error("Invalid input, entered input is not a number!!!");
                         return;
                     }
-                    System.out.println("Natural log of "+num1+" is : "+ calculator.naturalLog(num1));
+                    if (a < 0)
+                        System.out.println("Input number can not be less than or equal to zero for finding log!!!");
+                    else
+                        System.out.println("The resultant output is: " +log(a));
                     break;
                 case 4:
-                    //Power
                     try {
-                        System.out.println("Enter the number : ");
-                        num1 = scanner.nextDouble();
-                        System.out.println("Enter power : ");
-                        num2 = scanner.nextDouble();
-                    }catch (InputMismatchException err){
-                        logger.error("Invalid input, input is not a number "+ err);
+                        System.out.print("Enter two numbers separated by space for calculating power(a^b: a b):::");
+                        a = sc.nextDouble();
+                        b = sc.nextDouble();
+                    } catch (InputMismatchException error) {
+                        logger.error("Invalid input, entered input is not a number!!!");
                         return;
                     }
-                    System.out.println("The value of "+num1+"^"+num2+" is : "+ calculator.power(num1,num2));
+                    c = pow(a, b);
+                    System.out.println("The resultant output is: " + c);
+                    break;
+                case 5:
+                    System.out.println("!!!Thank you for using calculator;Have a nice day!!!");
+                    check = false;
                     break;
                 default:
-                    System.out.println("Invalid Option selected , Exiting..........");
+                    System.out.println("XXXXX @@Wrong choice entered,please enter a valid number@@ XXXXXX");
                     return;
             }
-        }while (true);
-    }
-
-    public double squareRoot(double num){
-        logger.info("[SQUAREROOT] - " + num );
-        double result = Math.sqrt(num);
-        logger.info("[RESULT - SQUAREROOT] - " + result);
-        return result;
-    }
-
-    public double factorial(double num){
-        logger.info("[FACTORIAL] - " + num);
-        double result = 1;
-        for(double i=1;i<=num;i++) {
-            result *= i;
         }
-        logger.info("[RESULT - FACTORIAL] - " + result);
-        return result;
     }
 
-    public double naturalLog(double num){
-        logger.info("[NATURAL LOG] - " + num);
-        double result = Math.log(num);
-        logger.info("[RESULT - NATURAL LOG] - " + result);
+    public static double sqrt(double a){
+        double c=0;
+        logger.info("Calculating square root  of given number:" + a);
+        if(a<0)
+            c=-1;
+        else
+            c = Math.sqrt(a);
+        logger.info("Resultant answer of power operations is : " + c);
+        return c;
+    }
+    public static Double fact(int f){
+        double result = 1;
+        logger.info("Calculating factorial  of given number:" + f);
+        if(f<0)
+            result=-1;
+        else {
+            try {
+                if (f == 0 || f == 1) return 1.0;
+
+                for (int i = 1; i <= f; i++) {
+                    result *= i;
+                }
+            }
+            catch (Exception e) {
+                logger.info("Exception occured");
+            }
+        }
+        logger.info("Resultant answer of power operations is : " + result);
         return result;
     }
-
-    public double power(double num,double pow){
-        logger.info("[POWER] - " + num + ", " + pow);
-        double result = Math.pow(num,pow);
-        logger.info("[RESULT - POWER] - " + result);
-        return result;
-
+    public static double log(double a){
+        double c=0;
+        logger.info("Calculating natural log  of given number:" + a);
+        if(a<=0)
+            c=-1;
+        else
+            c = Math.log(a);
+        logger.info("Resultant answer of natural log operation is : " + c);
+        return c;
+    }
+    public static double pow ( double a, double b){
+        double c=0;
+        logger.info("Calculating power function of given numbers:" + a+","+b);
+        if (a == 0)
+            return 0;
+        if (b == 0)
+            return 1;
+        try {
+            c = Math.pow(a, b);
+        }
+        catch(Exception e) {
+            logger.info("Exception occured");
+        }
+        logger.info("Resultant answer of power operation is : " + c);
+        return c;
     }
 }
